@@ -1,0 +1,25 @@
+version: 2
+sources:
+  - name: azure
+    description: "Local Postgres copies of Microsoft's openly published Azure Trace for Packing 2020. Not included in repo."
+    schema: raw
+    tables:
+      - name: vm_requests
+        description: "One Azure VM request per source SQLite file and VM id."
+        columns:
+          - name: source_file
+            data_tests: [not_null]
+          - name: vm_id
+            data_tests: [not_null]
+          - name: priority
+            data_tests:
+              - accepted_values:
+                  values: [0, 1]
+                  quote: false
+      - name: vm_type_options
+        description: "Resource definitions for each VM type and compatible machine; units are normalized fractions."
+        columns:
+          - name: source_file
+            data_tests: [not_null]
+          - name: option_id
+            data_tests: [not_null]

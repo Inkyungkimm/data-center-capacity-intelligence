@@ -1,0 +1,35 @@
+version: 2
+models:
+  - name: fct_vm_requests
+    description: "One row per source_file + VM ID; accounts for negative start dates and end-time censoring."
+    columns:
+      - name: source_file
+        data_tests: [not_null]
+      - name: vm_id
+        data_tests: [not_null]
+      - name: observed_lifetime_days
+        description: "Available only for completed (non-censored) VM requests."
+  - name: mart_daily_capacity_demand
+    description: "Requests arriving and VMs overlapping each observation day, by priority; NOT instant peak capacity."
+    columns:
+      - name: day_index
+        data_tests: [not_null]
+      - name: priority
+        data_tests:
+          - accepted_values:
+              values: [0, 1]
+              quote: false
+  - name: mart_vm_type_demand
+    description: "VM demand by type and per-source scope; includes optional normalized resource bounds across compatible hardware."
+    columns:
+      - name: source_file
+        data_tests: [not_null]
+      - name: vm_type_id
+        data_tests: [not_null]
+  - name: mart_vm_type_resource_profiles
+    description: "Hardware-generation-specific normalized resource-profile ranges; not physical cores or watts."
+    columns:
+      - name: source_file
+        data_tests: [not_null]
+      - name: vm_type_id
+        data_tests: [not_null]

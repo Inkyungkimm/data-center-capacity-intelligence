@@ -1,0 +1,13 @@
+.venv/
+.env
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.DS_Store
+raw_data/
+*.sqlite
+*.sqlite3
+*.db
+*.zip
+dbt_project/target/
+dbt_project/logs/
